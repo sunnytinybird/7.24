@@ -1,0 +1,70 @@
+#include<stdio.h>
+void Swap(char* ful1, char* ful2, int width)
+{
+	int i;
+	for (i = 0;i < width;i++)
+	{
+		int tmp = *ful1;
+		*ful1 = *ful2;
+		*ful2 = tmp;
+		ful1++;
+		ful2++;
+	}
+}
+
+void revevrse(void* base, int sz, int width)
+{
+	int i, j;
+	for (i = 0;i < sz - 1;i++)
+	{
+		for (j = 0;j < sz - 1 - i;j++)
+		{
+			Swap((char*)base + width * j, (char*)base + width * (j+ 1), width);
+		}
+
+	}
+}
+void test1()
+{
+	float arr[] = { 1.0,2.0,3.0,4.0,5.0 };
+	int sz;
+	sz = sizeof arr / sizeof arr[0];
+	revevrse(arr, sz, sizeof arr[0]);
+	int i;
+	for (i = 0;i < sz;i++)
+	{
+		printf("%f ", arr[i]);
+	}
+	printf("\n");
+}
+
+struct Stu
+{
+	char name[20];
+	int age;
+};
+void test2()
+{
+	struct Stu s[] = { {"刘明",20},{"张强",18},{"王志",16} };
+	int sz;
+	sz = sizeof s / sizeof s[0] ;
+	revevrse(s, sz, sizeof s[0]);
+	int i;
+	for (i = 0;i < sz;i++)
+	{
+		printf("%s ", s[i].name );
+	}
+	printf("\n");
+	int j;
+	for (j = 0;j < sz;j++)
+	{
+		printf("%d ", s[j].age);
+	}
+}
+
+int main()
+{
+	test1();
+	test2();
+	return 0;
+}

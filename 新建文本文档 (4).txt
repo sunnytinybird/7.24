@@ -1,0 +1,46 @@
+//左旋转字符串  
+#include<assert.h>
+void Swap(char* ful1, char* ful2, int width)
+{
+	int i;
+	for (i = 0;i < width;i++)
+	{
+		int tmp = *ful1;
+		*ful1 = *ful2;
+		*ful2 = tmp;
+		ful1++;
+		ful2++;
+	}
+}
+
+void revevrse(void* base, int sz, int width)
+{
+	int i, j;
+	for (i = 0;i < sz - 1;i++)
+	{
+		for (j = 0;j < sz - 1 - i;j++)
+		{
+			Swap((char*)base + width * j, (char*)base + width * (j + 1), width);
+		}
+
+	}
+}
+void Rotate(char* arr, int k)
+{
+	assert(arr);//断言函数，防止指针为空
+	int len = strlen(arr);
+	assert(k <= len);
+	revevrse(arr,k,1);//三步翻转法：先翻转左边，再翻转右边，最后翻转整体
+	revevrse(arr+k,len-k,1);
+	revevrse(arr,len,1);
+}
+
+int main()
+{
+	 char arr[] = { "abcdef" };
+	 char arr2[] = {"abcdef"};
+	 int k = 3;
+	 Rotate(arr, k);
+	 printf("%s %s", arr2,arr);
+	 return 0;
+}

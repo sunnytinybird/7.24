@@ -1,0 +1,56 @@
+//kmp算法
+//自制strstr函数
+#define  _CRT_SECURE_NO_WARNINGS 1 
+#include<stdio.h>
+#include<string.h>
+#include<assert.h>
+char* my_strstr(const char* p1,const char* p2)
+{
+	assert(p1 != NULL && p2 != NULL);
+	const char* cur = p1;//设立一个临时变量cur，每次循环从这个临时变量开始找，若找到了，就返回这个临时变量地址
+	const char* s1 = p1;//整个过成是一个循环，所以要循环p1和怕p2地址不能改变，设立两个新变量代替p1p2的值
+	const char* s2 = p2;//
+	if (*p2 =='\0')
+	{
+		return (char*)p1;
+	}
+
+
+	while (*cur)//以*cur为循环的条件，若*cur为0，则说明遍历了arr1仍未找到
+	{
+		p1 = cur;
+		s1 = p1;
+		s2 = p2;
+		while (*s1 != '\0' && *s2 != '\0' && *s1 == *s2)
+		{
+			s1++;
+			s2++;
+		}
+		if (*s2 == '\0')//能让p2（s2）++的只有s1==s2这个循环，所以只要*s2等于\0了就说明找到了
+		{
+			return  (char*)cur;
+		}
+		if (*s1 == '\0')//如果循环结束，*s2不等于0，而*s1等于0，则说明p1比p2短，则不可能找到子字符串，则提前返回null，节约性能
+		{
+			return NULL;
+		}
+		cur++;//一轮循环以cur地址代表的字符未找到子字符串，则跳到下一个字符继续寻找
+	}
+	return NULL;
+}
+
+int main()
+{
+	char arr1[] = { "abbbde" };
+	char arr2[] = { "" };
+	char* ret=my_strstr(arr1, arr2);
+	if (ret == NULL)
+	{
+		printf("没找到");
+	}
+	else
+	{
+		printf("%s", ret);
+	}
+	return 0;
+}
